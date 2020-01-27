@@ -1,0 +1,112 @@
+Later Feature:
+Random encounter generator based on terrain and party size/level
+
+On/Off player rolls or automatic
+On/Off combat grid
+
+Initial step: Click to roll initiative
+	Sets order of combat based on rolls + adjustments
+	Movement (if on)
+	[Skip turn]
+	Actions: What is action?
+		Melee
+			What weapon?
+				Swords, axes, etc. 5 ft range
+				Polearms, Lances, etc. 10 ft range
+		Ranged
+			What weapon?
+		Spell 
+			What spell?
+				heal/hurt/effect
+				save or attack
+			Dash
+			Dodge
+			Disengage
+		Hold - how will this work?
+		Use Item
+		Do Nothing
+		(if grid on, check atk distance)
+	Actions: Who is the target?
+	(If grid on) Actions: Are they in range
+	Resolve action:
+		Add/subtract HP
+		Status effects:
+			ongoing, movement, inspiration, etc.
+		No resolution
+Next Character/Monster in order
+	On player turns - player handle rolls, DM adjusts effects. 
+	
+	
+*Player attacks creatures
+	Menu: 
+		Weapon
+			Damage
+		Spell
+			Which?
+				Save or spell attack
+				Resolution:
+					pass/fail save and damage
+					spell effect to target
+
+					
+Need option to enter a villain with full player abilities
+Option for custom weapon
+Option for custom spell
+
+
+
+
+Later Feature:
+Random encounter generator based on terrain and party size/level
+
+On/Off player rolls or automatic
+On/Off combat grid
+
+Initial step: Click to roll initiative
+	Sets order of combat based on rolls + adjustments
+	Movement (if on)
+	[Skip turn]
+	Actions: What is action?
+		Melee
+			What weapon?
+				Swords, axes, etc. 5 ft range
+				Polearms, Lances, etc. 10 ft range
+		Ranged
+			What weapon?
+		Spell 
+			What spell?
+				heal/hurt/effect
+				save or attack
+			Dash
+			Dodge
+			Disengage
+		Hold - how will this work?
+		Use Item
+		Do Nothing
+		(if grid on, check atk distance)
+	Actions: Who is the target?
+	(If grid on) Actions: Are they in range
+	Resolve action:
+		Add/subtract HP
+		Status effects:
+			ongoing, movement, inspiration, etc.
+		No resolution
+Next Character/Monster in order
+	On player turns - player handle rolls, DM adjusts effects. 
+	
+	
+*Player attacks creatures
+	Menu: 
+		Weapon
+			Damage
+		Spell
+			Which?
+				Save or spell attack
+				Resolution:
+					pass/fail save and damage
+					spell effect to target
+
+					
+Need option to enter a villain with full player abilities
+Option for custom weapon
+Option for custom spell
