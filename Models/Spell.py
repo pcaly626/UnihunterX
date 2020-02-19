@@ -11,8 +11,8 @@ class Spell(Base):
 
     id = Column(Integer, primary_key=True, autoincrement=True)
     name =  Column(String(255), nullable=True)
-    description = Column(String(255), nullable=True)
-    higher_level = Column(String(255), nullable=True)
+    description = Column(String(1028), nullable=True)
+    higher_level = Column(String(1028), nullable=True)
     spell_range =  Column(String(255), nullable=True)
     duration =  Column(String(255), nullable=True)
     casting_time = Column(String(255))
@@ -38,25 +38,16 @@ with engine.connect() as conn:
                 tempAttributes.append(attribute)
             match = re.sub("'", " ", spell[spellName]["name"])
             valueString += "'" + match + "',"
-            match = re.sub("'", " ", spell[spellName]["desc"][0][:254])
+            match = re.sub("'", " ", spell[spellName]["desc"][0])
             valueString += "'" + match + "',"
             if "higher_level" in tempAttributes:
-                match = re.sub("'", " ", spell[spellName]["higher_level"][0][:254])
+                match = re.sub("'", " ", spell[spellName]["higher_level"][0])
                 valueString += "'" + match + "',"
             else: 
                 valueString += "Null,"
             valueString += "'" + spell[spellName]["range"] + "',"
             valueString += "'" + spell[spellName]["duration"] + "',"
             valueString += "'" + spell[spellName]["casting_time"] + "'"
-            
-                # if attribute in spellAttributes:
-                #     if type(spell[spellName][attribute]) == list:
-                #         valueString += "'" + spell[spellName][attribute][0][:254] + "',"
-                            
-                #     elif attribute == "casting_time":
-                #         valueString += "'" + spell[spellName][attribute][0] + "'"
-                #     else:
-                #         valueString += "'" + str(spell[spellName][attribute]) + "',"
             
             engine.execute("INSERT INTO spell ( name, description, higher_level, spell_range, duration, casting_time ) VALUES (" + valueString + ")")
             valueString = ""
