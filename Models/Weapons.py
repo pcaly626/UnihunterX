@@ -18,7 +18,6 @@ class Weapon(Base):
     damage_bonus = Column(Integer)
     damage_type = Column(String(16))
     range_distance = Column(Integer)
-    properties = Column(String(32))
     two_handed_dice = Column(String(32))
     two_handed_bonus = Column(Integer)
     two_handed_type = Column(String(32))
@@ -33,3 +32,28 @@ files = os.listdir(pathToWeaponsFiles)
 valueString = ""
 
 
+
+with engine.connect() as conn:
+
+    for file in files:
+        with open( pathToWeaponsFiles + file, 'r') as reader:
+            weapon = json.loads(reader.read())
+        for weaponName in weapon:
+            valueString += "'" + weapon[weaponName]["name"] + "',"
+            valueString += "'" + weapon[weaponName]["equipment_category"] + "',"
+            valueString += "'" + weapon[weaponName]["weapon_range"] + "',"
+            valueString += "'" + weapon[weaponName]["damage"]["damage_dice"] + "',"
+            valueString += "'" + str(weapon[weaponName]["damage"]["damage_bonus"]) + "',"
+            valueString += "'" + weapon[weaponName]["damage"]["damage_type"]["name"] + "',"
+            valueString += "'" + str(weapon[weaponName]["range"]["normal"]) + "',"
+            try:
+                valueString += "'" + weapon[weaponName]["2h_damage"]["damage_dice"] + "',"
+                valueString += "'" + str(weapon[weaponName]["2h_damage"]["damage_bonus"]) + "',"
+                valueString += "'" + weapon[weaponName]["2h_damage"]["damage_type"]["name"] + "'"
+            except:
+                valueString += "'null',"
+                valueString += "'0',"
+                valueString += "'null'"
+            engine.execute(
+                "INSERT INTO weapon ( name, equipment_category, weapon_range, damage_dice, damage_bonus, damage_type, range_distance, two_handed_dice, two_handed_bonus, two_handed_type ) VALUES (" + valueString + ")")
+            valueString = ""
