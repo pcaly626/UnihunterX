@@ -12,7 +12,7 @@ for spell in data["results"]:
     r = requests.get(url=URL)
     spellResults.append(r.json())
 # sort the list alphabetically
-extractData = ["name", "casting_time", "duration", "range", "desc", "higher_level"]
+extractData = ["name", "casting_time", "duration", "range", "desc", "higher_level", "concentration", "level", "school"]
 stop = False
 # steps through the alphabet
 for c in string.ascii_lowercase:
