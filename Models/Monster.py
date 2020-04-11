@@ -25,23 +25,14 @@ class Monster(Base):
     damage_resistances =  Column(String(255), nullable=True)
     damage_immunities = Column(String(255), nullable=True)
     condition_immunities = Column(String(255), nullable=True)
-    challenge_rating = Column(Integer)
+    challenge_rating = Column(Float)
     attack_bonus = Column(Integer, server_default=text("0"))
-    legendary_action_id = Column(Integer, ForeignKey('legendary_monster_actions.id'))
-
-
-class LegendaryMonsterActions(Base):
-    __tablename__ = 'legendary_monster_actions'
-
-    name =  Column(String(255), nullable=True)
-    desc = Column(Text(length=None, collation=None, convert_unicode=False, unicode_error=None, _warn_on_bytestring=False, _expect_unicode=False))
-    attack_bonus = Column(Integer)
 
 
 engine = create_engine('postgresql://postgres:UniHunterX@localhost:5432/UniHunterX')
 Base.metadata.create_all(engine)
-monsterAttributes = ["name", "size", "type", "armor_class", "hit_points", "strength", "dexterity", "constitution", "intelligence", "wisdom", "charisma", "challenge_rating", "attack_bonus", "actions", "legendary_actions"]
-pathToMonsterFiles = "scripts/monsters/"
+monsterAttributes = ["name", "size", "type", "armor_class", "hit_points", "strength", "dexterity", "constitution", "intelligence", "wisdom", "charisma", "challenge_rating", "attack_bonus", "actions"]
+pathToMonsterFiles = "../scripts/monsters/"
 files = os.listdir(pathToMonsterFiles)
 valueString = ""
 legendaryActionString = ""
@@ -52,28 +43,23 @@ with engine.connect() as conn:
         with open( pathToMonsterFiles + file, 'r') as reader:
             monster = json.loads(reader.read())
         for monsterName in monster:
-           
-            for attribute in monster[monsterName]:
-                if attribute in monsterAttributes:                        
-                            
-                    if attribute == "legendary_actions":
-                            for action in monster[monsterName][attribute]:
-                                
-                                for item in action:
-                                    
-                                    if item == "legendary_monster_id":
-                                        valueString += str(action[item])
-                    elif type(monster[monsterName][attribute]) == str:
-                        valueString += "'" + str(monster[monsterName][attribute]) + "',"
-                    elif attribute == "actions":
-                        try:
-                            valueString += str(monster[monsterName][attribute][1]["attack_bonus"]) + ","
-                        except:
-                            valueString += "0,"
-                    else:
-                        valueString += str(monster[monsterName][attribute]) + ","
-                if monsterName == "sea-horse" or monsterName == "frog":
-                    valueString += "0"
-            print( valueString )
-            engine.execute("INSERT INTO monster (name, size, monster_type, armor_class, hit_points, strength, dexterity, constitution, intelligence, wisdom, charisma, challenge_rating, attack_bonus, legendary_action_id) VALUES (" + valueString + ")")
-            valueString = ""
+           for monsterName in monster:
+                valueString += "'" + monster[monsterName]["name"] + "',"
+                valueString += "'" + monster[monsterName]["size"] + "',"
+                valueString += "'" + monster[monsterName]["type"] + "',"
+                valueString += "'" + str(monster[monsterName]["armor_class"]) + "',"
+                valueString += "'" + str(monster[monsterName]["hit_points"]) + "',"
+                valueString += "'" + str(monster[monsterName]["strength"]) + "',"
+                valueString += "'" + str(monster[monsterName]["dexterity"]) + "',"
+                valueString += "'" + str(monster[monsterName]["constitution"]) + "',"
+                valueString += "'" + str(monster[monsterName]["intelligence"]) + "',"
+                valueString += "'" + str(monster[monsterName]["wisdom"]) + "',"
+                valueString += "'" + str(monster[monsterName]["charisma"]) + "',"
+                valueString += "'" + str(monster[monsterName]["challenge_rating"]) + "',"
+                try:
+                    valueString += "'" + str(monster[monsterName]["actions"][0]["attack_bonus"]) + "'"
+                except:
+                    valueString += "'0'"
+                
+                engine.execute("INSERT INTO monster (name, size, monster_type, armor_class, hit_points, strength, dexterity, constitution, intelligence, wisdom, charisma, challenge_rating, attack_bonus) VALUES (" + valueString + ")")
+                valueString = ""
