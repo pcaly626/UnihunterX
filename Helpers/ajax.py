@@ -30,5 +30,5 @@ for letter in string.ascii_lowercase:
                 continue
             cleanedResults[extract] = monster[extract]
         monsterAttributes[monster["index"]] = cleanedResults
-    with open("monsters/monster_" + c + ".json", "w") as file:
+    with open("../scripts/monsters/monster_" + letter + ".json", "w") as file:
         file.write(json.dumps(monsterAttributes))

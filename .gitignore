@@ -10,8 +10,11 @@ scripts/weapons/
 public/
 node_modules/
 package.json
+package-lock.json
 yarn.lock
 *.lock
+.idea/
+
 # dependencies
 /node_modules
 /.pnp

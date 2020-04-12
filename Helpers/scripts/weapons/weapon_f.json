@@ -1,0 +1,1 @@
+{"flail": {"name": "Flail", "equipment_category": "Weapon", "weapon_range": "Melee", "damage": {"damage_dice": "1d8", "damage_bonus": 0, "damage_type": {"url": "/api/damage-types/bludgeoning", "name": "Bludgeoning"}}, "range": {"normal": 5, "long": null}, "properties": []}}
