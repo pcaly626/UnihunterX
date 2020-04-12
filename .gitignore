@@ -3,13 +3,10 @@
 #UnihunterX
 .vscode/
 __pycache__/
-src/
-public/
 node_modules/
-combat-manager/node_modules
 *.lock
 .idea/
-
+combat-manager/public/connect.js
 # dependencies
 /node_modules
 /.pnp
