@@ -4,14 +4,9 @@
 .vscode/
 __pycache__/
 src/
-scripts/monsters/
-scripts/spells/
-scripts/weapons/
 public/
 node_modules/
-package.json
-package-lock.json
-yarn.lock
+combat-manager/node_modules
 *.lock
 .idea/
 
