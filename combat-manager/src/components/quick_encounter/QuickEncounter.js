@@ -60,7 +60,6 @@ class QuickEncounter extends Component
                                 />)
         }
 
-
         return( 
             <div>
                 <Link to="/">Menu</Link>

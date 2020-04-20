@@ -31,3 +31,5 @@ app.on('activate', () => {
     createWindow();
   }
 });
+
+let server = require( './queries.js')

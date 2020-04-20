@@ -1,22 +1,25 @@
-const pgp = require('pg-promise')(/* initialization options */);
-const cn = require('./connect')
+// var sqlite3 = require('sqlite3').verbose();
+// var db = new sqlite3.Database('./combat_db', ( err ) => {
+//     if( err ){
+//         console.error(err.message)
+//     }
+//     console.log("Connected")
+// })
 
+// db.serialize( () => {
+//     db.each( 'SELECT * FROM monsters', (err, row) => {
+//         if(err){
+//             console.error(err.message)
+//         }
+//         console.log( row.name + "\t")
+//     })
+// })
 
-// alternative:
+// db.close((err) => {
+//     if (err) {
+//       console.error(err.message);
+//     }
+//     console.log('Close the database connection.');
+//   });
 
-const db = pgp({
-    host: "127.0.0.1", // server name or IP address;
-    port: 5432,
-    database: 'UniHunterX',
-    user: 'postgres',
-    password: 'UniHunterX'
-}) // database instance;
-
-// select and return a single user name from id:
-db.one('SELECT * FROM monster WHERE id = $1', [1])
-    .then(monster => {
-        console.log(monster.name) // print user name;
-    })
-    .catch(error => {
-        console.log(error) // print the error;
-    })
+//   export default test = () => console.log("yay")
