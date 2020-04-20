@@ -4,7 +4,13 @@ const cn = require('./connect')
 
 // alternative:
 
-const db = pgp(cn) // database instance;
+const db = pgp({
+    host: "127.0.0.1", // server name or IP address;
+    port: 5432,
+    database: 'UniHunterX',
+    user: 'postgres',
+    password: 'UniHunterX'
+}) // database instance;
 
 // select and return a single user name from id:
 db.one('SELECT * FROM monster WHERE id = $1', [1])

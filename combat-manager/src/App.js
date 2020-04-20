@@ -1,25 +1,23 @@
 import React from 'react';
-import logo from './logo.svg';
+import Menu from './components/menu/Menu';
 import './App.css';
-
+import QuickEncounter from './components/quick_encounter/QuickEncounter';
+import { HashRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { Provider } from 'react-redux';
+import store from './store';
 function App() {
+  
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+   <div>
+     <Provider store={store}>
+     <Router>
+        <Switch>
+          <Route exact path="/" component={Menu}/>
+          <Route path="/quick_encounter/" component={QuickEncounter}/>
+        </Switch>
+     </Router>
+    </Provider>
+   </div>
   );
 }
 

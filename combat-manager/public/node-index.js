@@ -11,6 +11,9 @@ app.use(
   })
 )
 
+app.get('/monsters_by_rate/', function( request, response){
+  console.log("recieved")
+})
 
 app.listen(port, () => {
     console.log(`App running on port ${port}.`)
