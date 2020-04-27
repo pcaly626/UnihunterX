@@ -1,15 +1,17 @@
 import axios from 'axios';
 import { GET_MONSTERS_BY_RATING } from './types';
-import { openDatabase } from 'react-native-sqlite-storage';
+const { ipcRenderer } = window.require('electron');
 
 
-
-// alternative:
-
-export const getMonstersByRating = ( rate ) => dispatch => {
-        const db = openDatabase({ name: 'combat_db' });
-        dispatch({
-        type: GET_MONSTERS_BY_RATING,
-        payload: ["h2"]
+export const getMonstersByRating = (rate) => dispatch => {
+        console.log(rate)
+        ipcRenderer.send('get-monsters', rate)
+        
+        ipcRenderer.on( "return-monsters",( event, data) => {
+                console.log(data)
+                dispatch({
+                type: GET_MONSTERS_BY_RATING,
+                payload: data
+                })
         })
 };

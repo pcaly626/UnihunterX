@@ -1,0 +1,17 @@
+.QuickEncounter {
+    position: fixed;
+    z-index: 200;
+    top: 0;
+    left: 0;
+    width: 50%;
+    height: 50%;
+    background-color: rgba(0,0,0,0.8);
+}
+
+.QuickEncounterOpen {
+    display: block;
+}
+
+.QuickEncounterClose {
+    display: none;
+}

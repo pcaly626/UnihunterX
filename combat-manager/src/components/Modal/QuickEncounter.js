@@ -5,12 +5,15 @@ import { connect } from 'react-redux';
 
 import Input from '../UI/Input';
 
+import './QuickEncounter.css';
+
 class QuickEncounter extends Component 
 {
     state = {
         quickEncouterForm: {
             challengeRating: {
                 type: 'select',
+                name: "challengeRating",
                 configuration:
                 {
                     options:[
@@ -38,12 +41,31 @@ class QuickEncounter extends Component
                 value: 1,
                 label: "Challenge Rating"
             },
+            numberOfPlayers:{
+                type:"text",
+                configuration:{
+
+                },
+                value: 1,
+                label: "Number of Players"
+            }
         }
     }
 
+    getMonstersByRate = () =>{
+        const rate = this.state.quickEncouterForm.challengeRating.value
+        console.log(rate)
+        this.props.getMonstersByRating(rate);
+    }
+
     challengeRatingChange = (event) =>{
-        console.log(event.target.value);
-        this.props.getMonstersByRating( event.target.value );
+        const updateQuickEncounterForm = { ...this.state.quickEncouterForm }
+        const updateElement = { ...this.state.quickEncouterForm.challengeRating}
+        console.log(updateElement)
+        updateElement.value = event.target.value
+        updateQuickEncounterForm.challengeRating = updateElement
+        console.log(updateQuickEncounterForm)
+        this.setState({ quickEncouterForm: updateQuickEncounterForm })
     }
 
     render() 
@@ -60,12 +82,20 @@ class QuickEncounter extends Component
                                 />)
         }
 
+        const showHideModal =
+        [
+            'QuickEncounter',
+            this.props.show ? 'QuickEncounterOpen' : 'QuickEncounterClose',
+        ]
+
         return( 
-            <div>
-                <Link to="/">Menu</Link>
+            <div className={ showHideModal.join( ' ' )}>
+                <button onClick={this.props.closed}>Menu</button>
                 <form className="form-block">
                     { formElements.map( element =>( element ) )}
+
                 </form>
+                <button id="get-monsters" onClick={this.getMonstersByRate}>get monsters</button>
             </div>
         )
     }

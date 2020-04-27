@@ -1,31 +1,99 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import { Link } from "react-router-dom";
 import "./Menu.css";
-
+import Backdrop from '../Modal/Backdrop';
+import QuickEncounter from '../Modal/QuickEncounter';
 
 class Menu extends Component
 {
+    state = {
+        modalIsOpen: false
+    }
+
+    toggleQuickEncounter = () => {
+        let updateModal = !this.state.modalIsOpen;
+        this.setState({modalIsOpen: updateModal})
+    }
+
     render()
     {
         return(
-            <div className="container">
-                <div style={{marginTop: "15%"}}>
-                    <div className="card" style={{margin: '10px'}}>
-                    <Link to="/quick_encounter/" className="btn">Quick Encounter
-                    </Link>
+            <Fragment>
+            <div>
+                <div className="Menu row">
+                    <div className="col-lg-4">
+                        <div className="card">
+                        <div className="card-header">
+
+                        </div>
+                        </div>
                     </div>
-                    <div className="card" style={{margin: '10px'}}>
-                        <button className="btn">Create Campaign</button>
+                    <div className="col-lg-4">
+                        <div className="card">
+
+                                <button className="btn">
+                                    <button onClick={this.toggleQuickEncounter}>
+                                        <h1>Quick Combat</h1>
+                                    </button>
+                                </button>
+                           
+                        </div>
                     </div>
-                    <div className="card" style={{margin: '10px'}}>
-                        <button className="btn">Create Encounter</button>
+                    <div className="col">
+                        <div className="row">
+                            <div className="col">
+                                <div className="card">    
+                                    <div className="card-header">
+                                    <h1>Create Enemy</h1>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="row">
+                            <div className="col">
+                                <div className="card">   
+                                    <div className="card-header">
+                                    <h1>Create Character</h1>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div className="card" style={{margin: '10px'}}>
-                        <button className="btn">Create Player</button>
+                </div>
+                <div className="row">
+                    <div className="col-lg-4">
+                        <div className="container">
+                            <div className="card">
+                                <div className="card-header">
+                                    <h1>Campaigns</h1>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="col-lg-4">
+                        <div className="container">
+                            <div className="card">
+                                <div className="card-header">
+                                    <h1>Encounters</h1>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="col-lg-4">
+                        <div className="container">
+                            <div className="card">
+                                <div className="card-header">
+                                    <h1>Players</h1>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-        )
+            <QuickEncounter show={ this.state.modalIsOpen } closed={ this.toggleQuickEncounter }/>
+            <Backdrop show={ this.state.modalIsOpen }/>
+            </Fragment>
+        );
     }
 }
 
