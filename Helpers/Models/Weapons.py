@@ -23,7 +23,8 @@ class Weapon(Base):
     two_handed_type = Column(String(32))
 
 
-engine = create_engine('postgresql://postgres:UniHunterX@localhost:5432/UniHunterX')
+
+engine = create_engine('sqlite:///combat_db')
 Base.metadata.create_all(engine)
 weaponAttributes = ["name", "equipment_category", "weapon_range", "damage", "damage_dice", "damage_bonus", "damage_type",
                    "range", "properties", "2h_damage"]
@@ -34,8 +35,9 @@ valueString = ""
 
 
 with engine.connect() as conn:
-
+    count = 1
     for file in files:
+        print("File" + str(count))
         with open( pathToWeaponsFiles + file, 'r') as reader:
             weapon = json.loads(reader.read())
         for weaponName in weapon:
@@ -57,3 +59,4 @@ with engine.connect() as conn:
             engine.execute(
                 "INSERT INTO weapon ( name, equipment_category, weapon_range, damage_dice, damage_bonus, damage_type, range_distance, two_handed_dice, two_handed_bonus, two_handed_type ) VALUES (" + valueString + ")")
             valueString = ""
+        count = count + 1

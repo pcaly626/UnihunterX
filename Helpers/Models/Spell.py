@@ -19,7 +19,8 @@ class Spell(Base):
     
     
 
-engine = create_engine('postgresql://postgres:UniHunterX@localhost:5432/UniHunterX')
+
+engine = create_engine('sqlite:///combat_db')
 Base.metadata.create_all(engine)
 spellAttributes = ["name", "range", "duration", "casting_time", "desc", "higher_level"]
 pathToSpellFiles = "../scripts/spells/"
@@ -28,8 +29,9 @@ valueString = ""
 
 
 with engine.connect() as conn:
-
+    count = 1
     for file in files:
+        print("File" + str(count))
         with open( pathToSpellFiles + file, 'r') as reader:
             spell = json.loads(reader.read())
         for spellName in spell:
@@ -51,3 +53,4 @@ with engine.connect() as conn:
             
             engine.execute("INSERT INTO spell ( name, description, higher_level, spell_range, duration, casting_time ) VALUES (" + valueString + ")")
             valueString = ""
+        count = count + 1

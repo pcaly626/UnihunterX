@@ -29,7 +29,7 @@ class Monster(Base):
     attack_bonus = Column(Integer, server_default=text("0"))
 
 
-engine = create_engine('postgresql://postgres:UniHunterX@localhost:5432/UniHunterX')
+engine = create_engine('sqlite:///combat_db')
 Base.metadata.create_all(engine)
 monsterAttributes = ["name", "size", "type", "armor_class", "hit_points", "strength", "dexterity", "constitution", "intelligence", "wisdom", "charisma", "challenge_rating", "attack_bonus", "actions"]
 pathToMonsterFiles = "../scripts/monsters/"
