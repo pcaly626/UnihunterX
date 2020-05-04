@@ -10,7 +10,7 @@ let mainWindow;
 
 function createWindow() {
   const {width, height} = electron.screen.getPrimaryDisplay().workAreaSize
-  mainWindow = new BrowserWindow({width:800, height:500, webPreferences: {
+  mainWindow = new BrowserWindow({width:1920, height:1080, webPreferences: {
     nodeIntegration: true
   }});
 

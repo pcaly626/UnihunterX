@@ -1,4 +1,9 @@
 .App-container {
-    padding: 2%;
-    background-color: tan;
+    background-image: url("../resources/images/background-parchment-light-fade.png");
+    height: 1080px;
+    width: 1920px; 
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    border-image: "fas fa-leaf";
 }

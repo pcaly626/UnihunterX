@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import "./Menu.css";
 import Backdrop from '../Modal/Backdrop';
 import QuickEncounter from '../Modal/QuickEncounter';
+import logo from "../../resources/images/logo-combat-manager.jpg";
 
 class Menu extends Component
 {
@@ -15,6 +16,8 @@ class Menu extends Component
         this.setState({modalIsOpen: updateModal})
     }
 
+
+
     render()
     {
         return(
@@ -22,39 +25,34 @@ class Menu extends Component
             <div>
                 <div className="Menu row">
                     <div className="col-lg-4">
-                        <div className="card">
-                        <div className="card-header">
-
-                        </div>
+                        <div className="card">                
+                            <img src={logo}/>
                         </div>
                     </div>
                     <div className="col-lg-4">
                         <div className="card">
-
-                                <button className="btn">
-                                    <button onClick={this.toggleQuickEncounter}>
-                                        <h1>Quick Combat</h1>
-                                    </button>
-                                </button>
-                           
+                            <button className="MenuButton" onClick={this.toggleQuickEncounter}>
+                                <h1>Quick Combat</h1>
+                            </button>                           
                         </div>
                     </div>
                     <div className="col">
                         <div className="row">
                             <div className="col">
                                 <div className="card">    
-                                    <div className="card-header">
-                                    <h1>Create Enemy</h1>
-                                    </div>
+                                    <button className="MenuButton">
+                                        <h1>Create Enemy</h1>
+                                        </button>
                                 </div>
                             </div>
                         </div>
                         <div className="row">
                             <div className="col">
                                 <div className="card">   
-                                    <div className="card-header">
-                                    <h1>Create Character</h1>
-                                    </div>
+                                    <button className="MenuButton">
+                                        <h1>Create Character</h1>
+                                        </button>
+                                   
                                 </div>
                             </div>
                         </div>
@@ -83,7 +81,7 @@ class Menu extends Component
                         <div className="container">
                             <div className="card">
                                 <div className="card-header">
-                                    <h1>Players</h1>
+                                    <h1>Players <i className="fas fa-plus"></i></h1>
                                 </div>
                             </div>
                         </div>
