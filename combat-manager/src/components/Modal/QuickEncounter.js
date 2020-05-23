@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import { Link } from 'react-router-dom';
-import { getMonstersByRating } from '../../actions/quick_ecounter_actions';
+import { getMonstersByRating, getPlayers, createEncounter } from '../../actions/quick_ecounter_actions';
 import { connect } from 'react-redux';
 
 import Input from '../UI/Input';
@@ -17,6 +17,7 @@ class QuickEncounter extends Component
                 configuration:
                 {
                     options:[
+                        {displayValue: "Select Challenge Rating"},
                         {displayValue: 1},
                         {displayValue: 2},
                         {displayValue: 3},
@@ -41,61 +42,117 @@ class QuickEncounter extends Component
                 value: 1,
                 label: "Challenge Rating"
             },
-            numberOfPlayers:{
-                type:"text",
-                configuration:{
-
+            terrain: {
+                type: 'select',
+                name: "terrain",
+                configuration:
+                {
+                    options:[
+                        {displayValue: 'Select Terrain'},
+                        {displayValue:'wetlands'},
+                        {displayValue:'swamp'},
+                        {displayValue:'desert'},
+                        {displayValue:'jungle'},
+                        {displayValue:'forest'},
+                    ]
                 },
                 value: 1,
-                label: "Number of Players"
-            }
+                label: "Terrain Type"
+            },
+            encounterPlayer:{
+                type:"select",
+                configuration:{
+                    options:[]
+                },
+                value: '',
+                label: "Select Player"
+            },
+
         }
     }
 
-    getMonstersByRate = () =>{
-        const rate = this.state.quickEncouterForm.challengeRating.value
-        console.log(rate)
-        this.props.getMonstersByRating(rate);
+    componentDidMount(){
+        this.props.getPlayers()
     }
 
-    challengeRatingChange = (event) =>{
+    getMonstersByRate = (event) =>{
         const updateQuickEncounterForm = { ...this.state.quickEncouterForm }
         const updateElement = { ...this.state.quickEncouterForm.challengeRating}
-        console.log(updateElement)
         updateElement.value = event.target.value
         updateQuickEncounterForm.challengeRating = updateElement
-        console.log(updateQuickEncounterForm)
+        this.props.getMonstersByRating(event.target.value);
+        this.setState({ quickEncouterForm: updateQuickEncounterForm })        
+    }
+
+    updateEncounterForm = (event, element) =>{
+        console.log( element )
+        const updateQuickEncounterForm = { ...this.state.quickEncouterForm }
+        const updateElement = { ...this.state.quickEncouterForm[element]}
+        updateElement.value = event.target.value
+        updateQuickEncounterForm[element] = updateElement
         this.setState({ quickEncouterForm: updateQuickEncounterForm })
+    }
+
+    startQuickEncounter = () =>{
+        
     }
 
     render() 
     {
-        const formElements = []
-        const encounterForm = { ...this.state.quickEncouterForm }
-
-        for( let element in encounterForm )
-        {
-            formElements.push( <Input label={encounterForm[element].label} 
-                                      type={encounterForm[element].type} 
-                                      configuration={encounterForm[element].configuration}
-                                      changed={(event) => this.challengeRatingChange(event)}
-                                />)
-        }
 
         const showHideModal =
         [
-            'QuickEncounter',
+            'modal',
             this.props.show ? 'QuickEncounterOpen' : 'QuickEncounterClose',
         ]
 
         return( 
             <div className={ showHideModal.join( ' ' )}>
-                <button onClick={this.props.closed}>Menu</button>
-                <form className="form-block">
-                    { formElements.map( element =>( element ) )}
-
-                </form>
-                <button id="get-monsters" onClick={this.getMonstersByRate}>get monsters</button>
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Quick Encounter</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close" onClick={this.props.closed}>
+                            <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <form onSubmit={this.startQuickEncounter}>
+                            <div class="modal-body">
+                                <div className="form-group">
+                                    <Input 
+                                        label={this.state.quickEncouterForm.challengeRating.label} 
+                                        type={this.state.quickEncouterForm.challengeRating.type} 
+                                        configuration={this.state.quickEncouterForm.challengeRating.configuration}
+                                        changed={(event) => this.getMonstersByRate(event)}
+                                        class="form-control"
+                                    />    
+                                    <Input 
+                                        label={this.state.quickEncouterForm.terrain.label} 
+                                        type={this.state.quickEncouterForm.terrain.type} 
+                                        configuration={this.state.quickEncouterForm.terrain.configuration}
+                                        changed={(event) => this.updateEncounterForm(event, 'terrain')}
+                                        class="form-control"
+                                    />    
+                                    <label>Player</label>
+                                     <select className='form-control' onChange={(event) => this.updateEncounterForm(event, 'encounterPlayer')}>
+                                        <option value=''>Select Player</option>
+                                        { this.props.players.map( player => (
+                                            <option key={player.id} value={player.id}>
+                                                {player.name}
+                                            </option>
+                                        ))}
+                                        </select>
+                                
+                                </div>
+                                    
+                            </div>
+                            <div class="modal-footer">
+                                <button type="submit" class="btn btn-primary">Start Encounter</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                
             </div>
         )
     }
@@ -103,7 +160,8 @@ class QuickEncounter extends Component
 }
 
 const mapStateToProps = (state) =>({
-    monsters: state.quickEncounterReducer.monsters
+    monsters: state.quickEncounterReducer.monsters,
+    players: state.quickEncounterReducer.players
 })
 
-export default connect( mapStateToProps, { getMonstersByRating } )(QuickEncounter);
+export default connect( mapStateToProps, { getMonstersByRating, getPlayers, createEncounter } )(QuickEncounter);
