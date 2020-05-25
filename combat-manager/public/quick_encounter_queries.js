@@ -63,14 +63,34 @@ exports.getPlayers = (mainWindow) =>{
   })
 }
 
-exports.createEncounter = (mainWindow, encounter) =>{
+exports.getPlayer = (mainWindow, id) =>{
   let db = new sqlite3.Database('D:\\unihunter\\combat-manager\\public\\combat_db', (error) => {
     if(error){
       return console.error(error.message) 
     }
-    console.log("Players Connected")
+    console.log("SELECT * FROM player WHERE player.id == " + id)
   })
-  db.all("SELECT * FROM player", [],(error, rows) =>{
+  
+  const sql = "SELECT * FROM player WHERE player.id ==" + id
+  db.all(sql, [],(error, rows) =>{
+
+    if(error){
+      console.error(error.message)
+    }
+    console.log(rows)
+    mainWindow.webContents.send("retrieve-player", rows)
+  })
+}
+
+exports.createEncounter = (mainWindow, encounter) =>{
+  console.log(encounter)
+  let db = new sqlite3.Database('D:\\unihunter\\combat-manager\\public\\combat_db', (error) => {
+    if(error){
+      return console.error(error.message) 
+    }
+  })
+  db.run("INSERT INTO encounter (name, terrain, player, challenge_rating) VALUES ( 'quick_encounter'," + encounter.terrain +","+ encounter.player +","+ encounter.challengeRating +")",[], (error) => {
+
     if(error){
       console.error(error.message)
     }

@@ -51,6 +51,10 @@ ipc.on('get-players', (event) =>{
   quickEncounterQueries.getPlayers(mainWindow)
 })
 
+ipc.on('get-player', (event, id) =>{
+  quickEncounterQueries.getPlayer(mainWindow, id)
+})
+
 ipc.on('create-encounter', (encounter) =>{
   quickEncounterQueries.createEncounter(mainWindow, encounter)
 })

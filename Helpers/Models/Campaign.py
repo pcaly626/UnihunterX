@@ -19,6 +19,32 @@ class Encounter(Base):
     name = Column(String(255), nullable=True)
     terrain = Column(String(255), nullable=True)
     campaign = Column(Integer, ForeignKey('campaign.id'))
+    player = Column(Integer, ForeignKey('player.id'))
+
+class Player(Base):
+    
+    __tablename__ = 'player'
+
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    name =  Column(String(255), nullable=True)
+    size =  Column(String(255), nullable=True)
+    race =  Column(String(255), nullable=True) #object
+    subrace =  Column(String(255), nullable=True) #object
+    player_class =  Column(String(255), nullable=True) #object
+    player_subclass =  Column(String(255), nullable=True) #object
+    armor_class = Column(Integer)
+    hit_points = Column(Integer)
+    level = Column(Integer)
+    speed = Column(Integer)
+    strength = Column(Integer)
+    dexterity = Column(Integer)
+    constitution = Column(Integer)
+    intelligence = Column(Integer)
+    wisdom = Column(Integer)
+    charisma = Column(Integer)
+    profiency_bonus = Column(Integer)
+    equipment = Column(String(1028), nullable=True)#fliepath
+    abilities_spells = Column(String(1028), nullable=True)#fliepath
 
 engine = create_engine('sqlite:///combat_db')
 Base.metadata.create_all(engine)

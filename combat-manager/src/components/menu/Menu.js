@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { connect } from 'react-redux';
 import "./Menu.css";
 import Backdrop from '../Modal/Backdrop';
-import QuickEncounter from '../Modal/QuickEncounter';
+import QuickEncounterModal from '../Modal/QuickEncounterModal';
 import CreatePlayer from '../Modal/CreatePlayer';
 import logo from "../../resources/images/logo-combat-manager.jpg";
 import { getPlayers } from '../../actions/quick_ecounter_actions';
@@ -103,7 +103,7 @@ class Menu extends Component
                     </div>
                 </div>
             </div>
-            <QuickEncounter show={ this.state.modalIsOpen } closed={ this.toggleQuickEncounter }/>
+            <QuickEncounterModal show={ this.state.modalIsOpen } closed={ this.toggleQuickEncounter }/>
             <CreatePlayer show={ this.state.playerModalIsOpen } closed={this.toggleCreatePlayer}/>
             <Backdrop show={ this.state.modalIsOpen }/>
             <Backdrop show={ this.state.playerModalIsOpen }/>

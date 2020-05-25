@@ -1,13 +1,13 @@
 import React, { Component, Fragment } from 'react';
 import { Link } from 'react-router-dom';
-import { getMonstersByRating, getPlayers, createEncounter } from '../../actions/quick_ecounter_actions';
+import { getPlayers, getPlayer, getMonstersByRating } from '../../actions/quick_ecounter_actions';
 import { connect } from 'react-redux';
 
 import Input from '../UI/Input';
 
-import './QuickEncounter.css';
+import './QuickEncounterModal.css';
 
-class QuickEncounter extends Component 
+class QuickEncounterModal extends Component 
 {
     state = {
         quickEncouterForm: {
@@ -64,11 +64,11 @@ class QuickEncounter extends Component
                 configuration:{
                     options:[]
                 },
-                value: '',
+                value: 0,
                 label: "Select Player"
             },
 
-        }
+        },
     }
 
     componentDidMount(){
@@ -80,7 +80,7 @@ class QuickEncounter extends Component
         const updateElement = { ...this.state.quickEncouterForm.challengeRating}
         updateElement.value = event.target.value
         updateQuickEncounterForm.challengeRating = updateElement
-        this.props.getMonstersByRating(event.target.value);
+        this.props.getMonstersByRating(updateElement.value)
         this.setState({ quickEncouterForm: updateQuickEncounterForm })        
     }
 
@@ -93,19 +93,23 @@ class QuickEncounter extends Component
         this.setState({ quickEncouterForm: updateQuickEncounterForm })
     }
 
-    startQuickEncounter = () =>{
-        
-    }
-
     render() 
     {
+
+        let encounterPlayer = {};
+        for(let player in this.props.players){
+            if( player == this.state.quickEncouterForm.encounterPlayer.value)
+            {
+                encounterPlayer = {...this.props.players[player]}
+            }
+        }
 
         const showHideModal =
         [
             'modal',
             this.props.show ? 'QuickEncounterOpen' : 'QuickEncounterClose',
         ]
-
+        const monster = this.props.monsters
         return( 
             <div className={ showHideModal.join( ' ' )}>
                 <div class="modal-dialog" role="document">
@@ -116,7 +120,7 @@ class QuickEncounter extends Component
                             <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
-                        <form onSubmit={this.startQuickEncounter}>
+               
                             <div class="modal-body">
                                 <div className="form-group">
                                     <Input 
@@ -147,12 +151,19 @@ class QuickEncounter extends Component
                                     
                             </div>
                             <div class="modal-footer">
-                                <button type="submit" class="btn btn-primary">Start Encounter</button>
+                                <Link to={{
+                                    pathname: '/quick_encounter',
+                                    state:{
+                                        player: encounterPlayer,
+                                        terrain: this.state.quickEncouterForm.terrain.value,
+                                        monster: monster[0]
+                                        
+                                    }
+                                }}>Start Encounter</Link>
                             </div>
-                        </form>
+                
                     </div>
                 </div>
-                
             </div>
         )
     }
@@ -160,8 +171,8 @@ class QuickEncounter extends Component
 }
 
 const mapStateToProps = (state) =>({
+    players: state.quickEncounterReducer.players,
     monsters: state.quickEncounterReducer.monsters,
-    players: state.quickEncounterReducer.players
 })
 
-export default connect( mapStateToProps, { getMonstersByRating, getPlayers, createEncounter } )(QuickEncounter);
+export default connect( mapStateToProps, { getMonstersByRating, getPlayers, getPlayer } )(QuickEncounterModal);
