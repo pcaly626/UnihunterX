@@ -3,7 +3,7 @@
 class Player{
 
     constructor(){
-
+        
     }
 
     ability = () =>{

@@ -5,7 +5,7 @@ const BrowserWindow = electron.BrowserWindow;
 const path = require('path');
 const isDev = require('electron-is-dev');
 const ipc = require('electron').ipcMain
-
+const quickEncounterQueries = require('./quick_encounter_queries')
 let mainWindow;
 
 function createWindow() {
@@ -38,24 +38,23 @@ app.on('activate', () => {
   }
 });
 
-const sqlite3 = require('sqlite3')
+ipc.on('get-monsters', ( event, rate) => {
+  quickEncounterQueries.getMonsters(mainWindow, event, rate)
+})
 
-ipc.on('get-monsters', (event, rate) => {
-  console.log(rate)
-  let db = new sqlite3.Database('D:\\unihunter\\combat-manager\\public\\combat_db', (error) => {
-    if(error){
-      return console.error(error.message) 
-    }
-    console.log("Connected")
-  })
 
-  db.all("SELECT * FROM monster WHERE monster.challenge_rating = " + rate, [], (error, rows) => {
-    if(error){
-      console.error(error.message)
-    }
-    rows.forEach((row) =>{
+ipc.on('create-player', (event, player) =>{
+  quickEncounterQueries.createPlayer( mainWindow, player)
+})
 
-    })
-    mainWindow.webContents.send("return-monsters", rows)
-  })
+ipc.on('get-players', (event) =>{
+  quickEncounterQueries.getPlayers(mainWindow)
+})
+
+ipc.on('get-player', (event, id) =>{
+  quickEncounterQueries.getPlayer(mainWindow, id)
+})
+
+ipc.on('create-encounter', (encounter) =>{
+  quickEncounterQueries.createEncounter(mainWindow, encounter)
 })

@@ -6,12 +6,13 @@ __pycache__/
 node_modules/
 *.lock
 .idea/
-combat-manager/public/connect.js
 # dependencies
 /node_modules
 /.pnp
 .pnp.js
 
+venv/
+env/
 # testing
 /coverage
 

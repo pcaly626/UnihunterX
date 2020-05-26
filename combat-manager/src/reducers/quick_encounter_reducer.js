@@ -1,7 +1,11 @@
-import { GET_MONSTERS_BY_RATING } from '../actions/types';
+import { GET_MONSTERS_BY_RATING, GET_PLAYERS, GET_PLAYER, CREATE_PLAYER } from '../actions/types';
+import { bindActionCreators } from 'redux';
 
 const initialState = {
-    monsters: []
+    monsters: [],
+    players: [],
+    encounter: new Object,
+    player: [],
 }
 
 export default function( state = initialState, action ){
@@ -12,9 +16,24 @@ export default function( state = initialState, action ){
                 ...state,
                 monsters: action.payload
             };
+        case CREATE_PLAYER:
+            return{
+                ...state,
+                players: action.payload
+            }
+        case GET_PLAYERS:
+            return{
+                ...state,
+                players: action.payload
+            }
+        case GET_PLAYER:
+            return{
+                ...state,
+                player: action.payload
+            }
         default:
             return{
-                ...state
+                ...state,
             }
     }
 }
