@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { Elf } from '../players/elves/Elf';
 import { getMonstersByRating, getPlayers } from '../actions/quick_ecounter_actions';
 import "./QuickEncounter.css";
 
